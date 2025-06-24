@@ -10,10 +10,11 @@ A **drop‑in, zero‑dependency widget** that lets your visitors open a WhatsAp
 <!-- 1️⃣  Add global config BEFORE the widget script -->
 <script>
   window.MiraWidgetConfig = {
-    whatsappMessage: "Hi Mira! I'm interested in your services ✨. I was refered by {referal code}", // optional
-    titleText       : "Applying from outside Germany?",       // required
-    subText         : "Chat with Mira.AI",                    // required
-    // containerId : "custom‑placeholder"                     // optional (see §3)
+    whatsappMessage      : "Hi Mira! I'm interested in your services ✨", // optional
+    companyReferralCode  : "ABC123",                                      // optional - adds ref line to message
+    titleText            : "Applying from outside Germany?",              // required
+    subText              : "Chat with Mira.AI",                           // required
+    // containerId       : "custom‑placeholder"                          // optional (see §3)
   };
 </script>
 
@@ -27,17 +28,45 @@ A **drop‑in, zero‑dependency widget** that lets your visitors open a WhatsAp
 
 ## 2  Configuration Reference
 
-| Property          | Type   | Default          | Description                                                                                                                 |
-| ----------------- | ------ | ---------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `titleText`       | string | — (**required**) | Title shown on the button.                                                                                                  |
-| `subText`         | string | — (**required**) | Subtitle under the title.                                                                                                   |
-| `whatsappMessage` | string | `""`             | Prefilled text in the WhatsApp chat.                                                                                        |
-| `position`        | string | `"bottom-right"` | One of `bottom-right`, `bottom-left`, `top-right`, `top-left` (only used in **floating** mode).                             |
-| `containerId`     | string | *(none)*         | **Embed** mode: ID of the element where the widget should be rendered. If omitted the widget floats and follows `position`. |
+| Property               | Type   | Default          | Description                                                                                                                 |
+| ---------------------- | ------ | ---------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `titleText`            | string | — (**required**) | Title shown on the button.                                                                                                  |
+| `subText`              | string | — (**required**) | Subtitle under the title.                                                                                                   |
+| `whatsappMessage`      | string | `""`             | Prefilled text in the WhatsApp chat.                                                                                        |
+| `companyReferralCode`  | string | *(none)*         | Optional referral code that gets appended to the WhatsApp message to identify the referring company.                        |
+| `position`             | string | `"bottom-right"` | One of `bottom-right`, `bottom-left`, `top-right`, `top-left` (only used in **floating** mode).                             |
+| `containerId`          | string | *(none)*         | **Embed** mode: ID of the element where the widget should be rendered. If omitted the widget floats and follows `position`. |
 
 ---
 
-## 3  Embed vs Floating Mode
+## 3  Company Referral Codes
+
+The `companyReferralCode` parameter allows Mira to track which website visitors( Candidates ) came from their widget. When provided, it automatically appends a referral line to the WhatsApp message.
+
+### Example with Referral Code
+
+```html
+<script>
+  window.MiraWidgetConfig = {
+    whatsappMessage: "Hi Mira! I'm interested in your services",
+    companyReferralCode: "PARTNER123",
+    titleText: "Need Help?",
+    subText: "Chat with Mira.AI"
+  };
+</script>
+```
+
+**Resulting WhatsApp Message:**
+```
+Hi Mira! I'm interested in your services
+Ref: PARTNER123
+```
+
+> **Note:** The referral line is only added when `companyReferralCode` is provided. If omitted, the message remains unchanged.
+
+---
+
+## 4  Embed vs Floating Mode
 
 ### Floating (default)
 
@@ -49,7 +78,8 @@ No `containerId` ⇒ the widget is `position:fixed` to the viewport.
 <div id="promo‑spot" style="height: 400px; width: 300px;"></div>
 <script>
   window.MiraWidgetConfig = {
-    whatsappMessage: "Hi Mira! I'm interested in your services ✨. I was refered by {referal code}",
+    whatsappMessage: "Hi Mira! I'm interested in your services ✨",
+    companyReferralCode: "PROMO2024", // optional referral tracking
     titleText : "Applying from outside Germany?",       // required
     subText : "Chat with Mira.AI",  
     containerId: "promo‑spot" // 🔗 render RIGHT HERE
@@ -62,7 +92,7 @@ No `containerId` ⇒ the widget is `position:fixed` to the viewport.
 
 ---
 
-## 4  CMS Recipes
+## 5  CMS Recipes
 
 ### WordPress (theme or plugin)
 
@@ -73,6 +103,7 @@ No `containerId` ⇒ the widget is `position:fixed` to the viewport.
     titleText : "Need advice?",
     subText   : "Talk to Mira.AI",
     whatsappMessage: "Hi, I found you via our website!",
+    companyReferralCode: "WP001", // Track WordPress referrals
   };
 </script>
 <script src="https://cdn.jsdelivr.net/gh/useconsul/mira-whatsapp-widget@latest/dist/mira-widget.min.js"></script>
@@ -88,6 +119,7 @@ No `containerId` ⇒ the widget is `position:fixed` to the viewport.
     titleText : "Questions?",
     subText   : "Chat with us on WhatsApp",
     whatsappMessage: "Hi Mira!",
+    companyReferralCode: "SHOP001", // Track Shopify store referrals
   };
 </script>
 {% endraw %}
@@ -100,7 +132,7 @@ Just paste the same two `<script>` tags into your **Custom Code / Footer HTML** 
 
 ---
 
-## 5  Frontend Frameworks
+## 6  Frontend Frameworks
 
 > The widget is plain IIFE JavaScript: no React, Vue or Angular bindings needed. Load it **once** per page, preferably in the HTML template so every route has access.
 
@@ -162,7 +194,7 @@ The widget is global—no need to import anything in your TS code.
 
 ---
 
-## 6  Advanced API (runtime control)
+## 7  Advanced API (runtime control)
 
 Once loaded, a global object becomes available:
 
@@ -175,7 +207,7 @@ window.MiraCustomWidget.remove(); // completely remove from the DOM
 
 ---
 
-## 7  Troubleshooting
+## 8  Troubleshooting
 
 | Symptom             | Cause / Fix                                                                                       |
 | ------------------- | ------------------------------------------------------------------------------------------------- |

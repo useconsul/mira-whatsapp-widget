@@ -286,12 +286,18 @@
     // Inject styles
     const styleSheet = document.createElement("style");
     styleSheet.textContent = styles;
-    document.head.appendChild(styleSheet);
-
+    document.head.appendChild(styleSheet);    
     // Create WhatsApp URL with message
+    let finalMessage = config.whatsappMessage || "";
+    
+    // Add referral code to message if provided
+    if (config.companyReferralCode) {
+      finalMessage += `\nRef: ${config.companyReferralCode}`;
+    }
+    
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${MIRA_PHONE}${
-      config.whatsappMessage
-        ? `&text=${encodeURIComponent(config.whatsappMessage)}`
+      finalMessage
+        ? `&text=${encodeURIComponent(finalMessage)}`
         : ""
     }`;
     // Create widget HTML
