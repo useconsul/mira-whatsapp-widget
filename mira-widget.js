@@ -146,6 +146,7 @@
                 height: 80px;
                 box-sizing: border-box;
                 position: relative;
+                flex-wrap: nowrap;
             }
             
             .mira-custom-widget .profile-image {
@@ -325,30 +326,31 @@
     // Create widget HTML
     const widgetHTML = `
                 <div class="mira-custom-widget ${isEmbeddedMode ? 'embedded-mode' : 'floating-mode'}" id="mira-custom-widget">
-                <div class="qr-dropdown">
-                <div class="qr-content">
-                <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
-                  whatsappUrl
-                )}&color=102542&bgcolor=ffffff" alt="WhatsApp QR Code">
-                <a href="${whatsappUrl}" target="_blank" rel="noreferrer" class="qr-button">Continue on WhatsApp</a>
-                </div>
-                <div class="footer-credit">
-                    Powered by <a href="https://tryworkabroad.com" target="_blank" rel="noreferrer">Workabroad</a>
-                </div>
-                </div>
-                <div class="widget-trigger" id="widget-trigger">
-                <div class="trigger-content">                <img class="profile-image" src="${MIRA_PROFILE}" alt="Mira.Ai">
-                <div class="text-content">
-                <div class="title-text">${config.titleText}</ iv>
-                <div class="sub-text">${config.subText}</div>
-                </div>
-                <div class="arrow-icon">
-                <svg viewBox="0 0 24 24">
-                <path d="M7 10l5 5 5-5z"/>
-                </svg>
-                </div>
-                </div>
-                </div>
+                  <div class="qr-dropdown">
+                    <div class="qr-content">
+                      <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
+                        whatsappUrl
+                      )}&color=102542&bgcolor=ffffff" alt="WhatsApp QR Code">
+                      <a href="${whatsappUrl}" target="_blank" rel="noreferrer" class="qr-button">Continue on WhatsApp</a>
+                    </div>
+                    <div class="footer-credit">
+                          Powered by <a href="https://tryworkabroad.com" target="_blank" rel="noreferrer">Workabroad</a>
+                    </div>
+                  </div>
+                  <div class="widget-trigger" id="widget-trigger">
+                    <div class="trigger-content">                
+                      <img class="profile-image" src="${MIRA_PROFILE}" alt="Mira.Ai">
+                      <div class="text-content">
+                        <div class="title-text">${config.titleText}</div>
+                        <div class="sub-text">${config.subText}</div>
+                      </div>
+                      <div class="arrow-icon">
+                        <svg viewBox="0 0 24 24">
+                        <path d="M7 10l5 5 5-5z"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
                 </div>
         `;
 
