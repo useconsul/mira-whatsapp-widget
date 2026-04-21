@@ -63,11 +63,12 @@
               position: relative;
               width: 100%;
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+              --width: 300px;
             }
 
             .mira-custom-widget.embedded-mode {
               position: relative !important;
-              width: 250px !important;
+              width: var(--width) !important;
               height: 100% !important;
               top: auto !important;
               bottom: auto !important;
@@ -101,14 +102,14 @@
               transform-origin: bottom center;
               border: 1px solid #e5e5e5;
               position: absolute;
-              width: 250px;
+              width: var(--width);
               right: 0;
               bottom: 100%;
               margin-bottom: 10px;
             }
             
             .mira-custom-widget.open .qr-dropdown {
-                max-height: 350px;
+                max-height: 800px;
                 opacity: 1;
                 visibility: visible;
                 margin-bottom: 10px;
@@ -118,7 +119,7 @@
             /* Main Trigger Button */
             .mira-custom-widget .widget-trigger {
               width: 100%;
-              width: 250px;
+              width: var(--width);
               margin-left: auto;
               background: linear-gradient(135deg, #102542, #064783);
               background-size: 200% 200%;
@@ -196,24 +197,158 @@
                 fill: white;
             }
 
-            /* QR Content */
+            /* QR Content Modernization */
             .mira-custom-widget .qr-content {
-                padding: 20px;
+                padding: 0;
                 text-align: center;
-                background: #f2f9fd;
+                background: white;
+            }
+
+            .mira-custom-widget .qr-header {
+                display: flex;
+                align-items: center;
+                padding: 16px 20px;
+                gap: 12px;
+                text-align: left;
+                position: relative;
+            }
+
+            .mira-custom-widget .header-main-info {
+                flex: 1;
+            }
+
+            .mira-custom-widget .header-title {
+                font-size: 18px;
+                font-weight: 700;
+                color: #102542;
+                margin: 0;
+                line-height: 1.2;
+            }
+
+            .mira-custom-widget .header-subtitle {
+                font-size: 13px;
+                color: #667085;
+                margin: 2px 0 0;
+                line-height: 1.4;
+            }
+
+            .mira-custom-widget .status-badge {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                background: #ECFDF3;
+                padding: 6px 10px;
+                border-radius: 100px;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+            }
+
+            .mira-custom-widget .status-dot {
+                width: 6px;
+                height: 6px;
+                background: #12B76A;
+                border-radius: 50%;
+            }
+
+            .mira-custom-widget .status-text {
+                font-size: 12px;
+                font-weight: 600;
+                color: #027A48;
+            }
+
+            /* Steps Section */
+            .mira-custom-widget .steps-container {
+                background: #F9FAFB;
+                margin: 0 20px 12px;
+                padding: 14px 16px;
+                border-radius: 16px;
+                text-align: left;
+            }
+
+            .mira-custom-widget .steps-heading {
+                font-size: 13px;
+                font-weight: 600;
+                color: #102542;
+                margin-bottom: 12px;
+            }
+
+            .mira-custom-widget .step-item {
+                display: flex;
+                gap: 12px;
+                position: relative;
+                margin-bottom: 12px;
+            }
+
+            .mira-custom-widget .step-item:last-child {
+                margin-bottom: 0;
+            }
+
+            .mira-custom-widget .step-item:not(:last-child)::after {
+                content: '';
+                position: absolute;
+                left: 12px;
+                top: 24px;
+                width: 1px;
+                height: calc(100% - 8px);
+                background: #E4E7EC;
+            }
+
+            .mira-custom-widget .step-number {
+                width: 24px;
+                height: 24px;
+                background: #D1FAE5;
+                color: #059669;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 12px;
+                font-weight: 700;
+                flex-shrink: 0;
+                z-index: 1;
+            }
+
+            .mira-custom-widget .step-item:last-child .step-number {
+                background: #F2F4F7;
+                color: #475467;
+            }
+
+            .mira-custom-widget .step-text {
+                font-size: 14px;
+                color: #344054;
+                line-height: 1.4;
+            }
+
+            /* QR View */
+            .mira-custom-widget .qr-section {
+                padding: 0 20px 20px;
+            }
+
+            .mira-custom-widget .qr-wrapper {
+                background: #F9FAFB;
+                padding: 12px;
+                border-radius: 16px;
+                margin-bottom: 12px;
             }
             
             .mira-custom-widget .qr-code {
-                width: 100%;
-                max-width: 200px;
-                height: auto;
-                border-radius: 12px;
-                margin: 0 auto 16px;
+                width: 120px;
+                height: 120px;
+                margin: 0 auto;
                 display: block;
-                box-shadow: 0 2px 12px rgba(16, 37, 66, 0.1);
-                border: 4px solid white;
+                border: 1px solid #EAECF0;
+                border-radius: 12px;
+                background: white;
+                padding: 6px;
             }
-            
+
+            .mira-custom-widget .qr-caption {
+                font-size: 13px;
+                color: #667085;
+                margin-bottom: 16px;
+            }
+
             .mira-custom-widget .qr-button {
                 display: flex;
                 align-items: center;
@@ -222,10 +357,9 @@
                 background-color: #25D366;
                 color: white;
                 text-decoration: none;
-                font-size: 14px;
-                white-space: nowrap;
+                font-size: 15px;
                 font-weight: 600;
-                padding: 12px 20px;
+                padding: 14px 24px;
                 border-radius: 12px;
                 transition: all 0.3s ease;
                 box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
@@ -233,7 +367,6 @@
                 cursor: pointer;
                 width: 100%;
                 box-sizing: border-box;
-                margin-top: 8px;
             }
 
             .mira-custom-widget .qr-button:hover {
@@ -242,16 +375,12 @@
                 box-shadow: 0 6px 16px rgba(37, 211, 102, 0.3);
             }
 
-            .mira-custom-widget .qr-button:active {
-                transform: translateY(0);
-            }
-
             .mira-custom-widget .qr-button::before {
                 content: '';
                 display: inline-block;
-                width: 24px;
-                height: 24px;
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 58 58'%3E%3Cpath fill='white' d='M0 58l4.988-14.963A28.43 28.43 0 011 28.5C1 12.76 13.76 0 29.5 0S58 12.76 58 28.5 45.24 57 29.5 57a28.44 28.44 0 01-13.26-3.273L0 58z'/%3E%3Cpath fill='%2325D366' d='M47.683 37.985c-1.316-2.487-6.169-5.331-6.169-5.331-1.098-.626-2.423-.696-3.049.42l-1.978 2.163c-1.832 1.241-3.529 1.193-5.242-.52l-7.962-7.962c-1.713-1.713-1.761-3.41-.52-5.242.272-.401 2.163-1.978 2.163-1.978 1.116-.627 1.046-1.951.42-3.049 0 0-2.844-4.853-5.331-6.169-1.058-.56-2.357-.364-3.203.482l-1.758 1.758c-5.577 5.577-2.831 11.873 2.746 17.45l5.097 5.097 5.097 5.097c5.577 5.577 11.873 8.323 17.45 2.746l1.758-1.758c.846-.846 1.042-2.145.482-3.203z'/%3E%3C/svg%3E");
+                width: 20px;
+                height: 20px;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z'/%3E%3C/svg%3E");
                 background-size: contain;
                 background-repeat: no-repeat;
                 background-position: center;
@@ -287,7 +416,8 @@
                 }
                 .mira-custom-widget .widget-trigger,
                 .mira-custom-widget .qr-dropdown {
-                    width: 280px;
+                    width: calc(100vw - 40px);
+                    max-width: 340px;
                 }
                 .mira-custom-widget .trigger-content {
                     padding: 12px;
@@ -328,10 +458,46 @@
                 <div class="mira-custom-widget ${isEmbeddedMode ? 'embedded-mode' : 'floating-mode'}" id="mira-custom-widget">
                   <div class="qr-dropdown">
                     <div class="qr-content">
-                      <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
-                        whatsappUrl
-                      )}&color=102542&bgcolor=ffffff" alt="WhatsApp QR Code">
-                      <a href="${whatsappUrl}" target="_blank" rel="noreferrer" class="qr-button">Continue on WhatsApp</a>
+                      <div class="qr-header">
+                        <img class="profile-image" src="${MIRA_PROFILE}" alt="Mira.Ai" style="width: 48px; height: 48px; margin: 0;">
+                        <div class="header-main-info">
+                          <h3 class="header-title">Mira.Ai</h3>
+                          <p class="header-subtitle">WhatsApp Recruiting Bot</p>
+                        </div>
+                        <div class="status-badge">
+                          <span class="status-dot"></span>
+                          <span class="status-text">Connected</span>
+                        </div>
+                      </div>
+
+                      <div class="steps-container">
+                        <div class="steps-heading">How it works:</div>
+                        <div class="step-item">
+                          <div class="step-number">1</div>
+                          <div class="step-text">Scan the QR code below</div>
+                        </div>
+                        <div class="step-item">
+                          <div class="step-number">2</div>
+                          <div class="step-text">Start a chat on WhatsApp</div>
+                        </div>
+                        <div class="step-item">
+                          <div class="step-number">3</div>
+                          <div class="step-text">Answer a few quick questions</div>
+                        </div>
+                        <div class="step-item">
+                          <div class="step-number">4</div>
+                          <div class="step-text">Get applied instantly</div>
+                        </div>
+                      </div>
+
+                      <div class="qr-section">
+                        <div class="qr-wrapper">
+                          <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
+                            whatsappUrl
+                          )}&color=102542&bgcolor=ffffff" alt="WhatsApp QR Code">
+                        </div>
+                        <a href="${whatsappUrl}" target="_blank" rel="noreferrer" class="qr-button">Start Chat on WhatsApp</a>
+                      </div>
                     </div>
                     <div class="footer-credit">
                           Powered by <a href="https://tryworkabroad.com" target="_blank" rel="noreferrer">Workabroad</a>
