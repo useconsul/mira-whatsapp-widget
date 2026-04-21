@@ -213,26 +213,48 @@
                 border: 4px solid white;
             }
             
-            .mira-custom-widget .qr-text {
-                font-size: 14px;
-                color: #102542;
-                font-weight: 500;
+            .mira-custom-widget .qr-button {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 8px;
+                gap: 10px;
+                background-color: #25D366;
+                color: white;
+                text-decoration: none;
+                font-size: 14px;
+                white-space: nowrap;
+                font-weight: 600;
+                padding: 12px 20px;
+                border-radius: 12px;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+                border: none;
+                cursor: pointer;
+                width: 100%;
+                box-sizing: border-box;
+                margin-top: 8px;
             }
-            
-            .mira-custom-widget .qr-text::before {
+
+            .mira-custom-widget .qr-button:hover {
+                background-color: #128C7E;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(37, 211, 102, 0.3);
+            }
+
+            .mira-custom-widget .qr-button:active {
+                transform: translateY(0);
+            }
+
+            .mira-custom-widget .qr-button::before {
                 content: '';
                 display: inline-block;
                 width: 24px;
                 height: 24px;
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 58 58'%3E%3Cpath fill='%2325D366' d='M0 58l4.988-14.963A28.43 28.43 0 011 28.5C1 12.76 13.76 0 29.5 0S58 12.76 58 28.5 45.24 57 29.5 57a28.44 28.44 0 01-13.26-3.273L0 58z'/%3E%3Cpath fill='%23FFF' d='M47.683 37.985c-1.316-2.487-6.169-5.331-6.169-5.331-1.098-.626-2.423-.696-3.049.42l-1.978 2.163c-1.832 1.241-3.529 1.193-5.242-.52l-7.962-7.962c-1.713-1.713-1.761-3.41-.52-5.242.272-.401 2.163-1.978 2.163-1.978 1.116-.627 1.046-1.951.42-3.049 0 0-2.844-4.853-5.331-6.169-1.058-.56-2.357-.364-3.203.482l-1.758 1.758c-5.577 5.577-2.831 11.873 2.746 17.45l5.097 5.097 5.097 5.097c5.577 5.577 11.873 8.323 17.45 2.746l1.758-1.758c.846-.846 1.042-2.145.482-3.203z'/%3E%3C/svg%3E");
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 58 58'%3E%3Cpath fill='white' d='M0 58l4.988-14.963A28.43 28.43 0 011 28.5C1 12.76 13.76 0 29.5 0S58 12.76 58 28.5 45.24 57 29.5 57a28.44 28.44 0 01-13.26-3.273L0 58z'/%3E%3Cpath fill='%2325D366' d='M47.683 37.985c-1.316-2.487-6.169-5.331-6.169-5.331-1.098-.626-2.423-.696-3.049.42l-1.978 2.163c-1.832 1.241-3.529 1.193-5.242-.52l-7.962-7.962c-1.713-1.713-1.761-3.41-.52-5.242.272-.401 2.163-1.978 2.163-1.978 1.116-.627 1.046-1.951.42-3.049 0 0-2.844-4.853-5.331-6.169-1.058-.56-2.357-.364-3.203.482l-1.758 1.758c-5.577 5.577-2.831 11.873 2.746 17.45l5.097 5.097 5.097 5.097c5.577 5.577 11.873 8.323 17.45 2.746l1.758-1.758c.846-.846 1.042-2.145.482-3.203z'/%3E%3C/svg%3E");
                 background-size: contain;
                 background-repeat: no-repeat;
                 background-position: center;
-                transition: transform 0.3s ease;
+                flex-shrink: 0;
             }
 
             /* Footer */
@@ -308,7 +330,7 @@
                 <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
                   whatsappUrl
                 )}&color=102542&bgcolor=ffffff" alt="WhatsApp QR Code">
-                <div class="qr-text">Continue on WhatsApp</div>
+                <a href="${whatsappUrl}" target="_blank" rel="noreferrer" class="qr-button">Continue on WhatsApp</a>
                 </div>
                 <div class="footer-credit">
                     Powered by <a href="https://tryworkabroad.com" target="_blank" rel="noreferrer">Workabroad</a>
@@ -317,7 +339,7 @@
                 <div class="widget-trigger" id="widget-trigger">
                 <div class="trigger-content">                <img class="profile-image" src="${MIRA_PROFILE}" alt="Mira.Ai">
                 <div class="text-content">
-                <div class="title-text">${config.titleText}</div>
+                <div class="title-text">${config.titleText}</ iv>
                 <div class="sub-text">${config.subText}</div>
                 </div>
                 <div class="arrow-icon">
