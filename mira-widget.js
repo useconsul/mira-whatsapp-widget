@@ -9,8 +9,55 @@
   const MIRA_PROFILE =
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mira.Ai%20by%20Workabroad.JPEG-09DTsUV87ZcHUFF4Vg0fQobzN4OJoQ.jpeg";
 
+  // Translation object
+  const translations = {
+    en: {
+      whatsappMessage: "Hello Mira",
+      titleText: "Applying from outside Germany?",
+      subText: "Apply with Mira.Ai",
+      headerSubtitle: "WhatsApp Recruiting Bot",
+      statusText: "Connected",
+      stepsHeading: "How it works:",
+      step1: "Scan the QR code below",
+      step2: "Start a chat on WhatsApp",
+      step3: "Answer a few quick questions",
+      step4: "Get applied instantly",
+      buttonText: "Start Chat on WhatsApp",
+      poweredBy: "Powered by",
+    },
+    fr: {
+      whatsappMessage: "Bonjour Mira",
+      titleText: "Vous postulez depuis l'étranger ?",
+      subText: "Postulez avec Mira.Ai",
+      headerSubtitle: "Bot de recrutement WhatsApp",
+      statusText: "Connecté",
+      stepsHeading: "Comment ça marche :",
+      step1: "Scannez le code QR ci-dessous",
+      step2: "Lancez une discussion sur WhatsApp",
+      step3: "Répondez à quelques questions rapides",
+      step4: "Postulez instantanément",
+      buttonText: "Démarrer la discussion sur WhatsApp",
+      poweredBy: "Propulsé par",
+    },
+    de: {
+      whatsappMessage: "Hallo Mira",
+      titleText: "Bewerbung aus dem Ausland?",
+      subText: "Bewerben Sie sich mit Mira.Ai",
+      headerSubtitle: "WhatsApp Recruiting Bot",
+      statusText: "Verbunden",
+      stepsHeading: "So funktioniert es:",
+      step1: "Scannen Sie den QR-Code unten",
+      step2: "Starten Sie einen Chat auf WhatsApp",
+      step3: "Beantworten Sie ein paar kurze Fragen",
+      step4: "Sofort bewerben",
+      buttonText: "Chat auf WhatsApp starten",
+      poweredBy: "Unterstützt durch",
+    },
+  };
+
   // Default configuration
   const defaultConfig = {
+    language: "en",
     whatsappMessage: "Hello Mira",
     titleText: "Applying from outside Germany?",
     subText: "Apply with Mira.Ai",
@@ -21,21 +68,56 @@
   function validateConfig(config) {
     const errors = [];
 
-    // Validate required fields
-    if (!config.titleText) errors.push("Title text is required");
-    if (!config.subText) errors.push("Sub text is required");
+    // Validate required fields (DEPRECATED)
+    // if (!config.titleText) errors.push("Title text is required");
+    // if (!config.subText) errors.push("Sub text is required");
+
+    // Validate language
+    if (config.language && !["en", "fr", "de"].includes(config.language)) {
+      errors.push("Invalid language. Supported: en, fr, de");
+    }
 
     return errors;
   }
 
   // Merge with window configuration if it exists
+  const userConfig = window.MiraWidgetConfig || {};
   const config = {
     ...defaultConfig,
-    ...(window.MiraWidgetConfig || {}),
-  }; // Validate configuration
+    ...userConfig,
+  };
+
+  // Get localized strings
+  const lang = translations[config.language] ? config.language : "en";
+  const t = translations[lang];
+
+  // Fill in missing text fields from translations if not provided by user
+  const textFields = [
+    "whatsappMessage",
+    "titleText",
+    "subText",
+    "headerSubtitle",
+    "statusText",
+    "stepsHeading",
+    "step1",
+    "step2",
+    "step3",
+    "step4",
+    "buttonText",
+    "poweredBy",
+  ];
+
+  textFields.forEach((field) => {
+    if (userConfig[field] === undefined) {
+      config[field] = t[field];
+    }
+  });
+
+  // Validate configuration
   const validationErrors = validateConfig(config);
   if (validationErrors.length > 0) {
-    Object.assign(config, defaultConfig);
+    // If validation fails, we still have our defaults and translations
+    console.warn("Mira Widget: Configuration validation errors:", validationErrors);
   }
 
   let isOpen = false;
@@ -460,33 +542,33 @@
                     <div class="qr-content">
                       <div class="qr-header">
                         <img class="profile-image" src="${MIRA_PROFILE}" alt="Mira.Ai" style="width: 48px; height: 48px; margin: 0;">
-                        <div class="header-main-info">
+                         <div class="header-main-info">
                           <h3 class="header-title">Mira.Ai</h3>
-                          <p class="header-subtitle">WhatsApp Recruiting Bot</p>
+                          <p class="header-subtitle">${config.headerSubtitle}</p>
                         </div>
                         <div class="status-badge">
                           <span class="status-dot"></span>
-                          <span class="status-text">Connected</span>
+                          <span class="status-text">${config.statusText}</span>
                         </div>
                       </div>
 
                       <div class="steps-container">
-                        <div class="steps-heading">How it works:</div>
+                        <div class="steps-heading">${config.stepsHeading}</div>
                         <div class="step-item">
                           <div class="step-number">1</div>
-                          <div class="step-text">Scan the QR code below</div>
+                          <div class="step-text">${config.step1}</div>
                         </div>
                         <div class="step-item">
                           <div class="step-number">2</div>
-                          <div class="step-text">Start a chat on WhatsApp</div>
+                          <div class="step-text">${config.step2}</div>
                         </div>
                         <div class="step-item">
                           <div class="step-number">3</div>
-                          <div class="step-text">Answer a few quick questions</div>
+                          <div class="step-text">${config.step3}</div>
                         </div>
                         <div class="step-item">
                           <div class="step-number">4</div>
-                          <div class="step-text">Get applied instantly</div>
+                          <div class="step-text">${config.step4}</div>
                         </div>
                       </div>
 
@@ -496,11 +578,11 @@
                             whatsappUrl
                           )}&color=102542&bgcolor=ffffff" alt="WhatsApp QR Code">
                         </div>
-                        <a href="${whatsappUrl}" target="_blank" rel="noreferrer" class="qr-button">Start Chat on WhatsApp</a>
+                        <a href="${whatsappUrl}" target="_blank" rel="noreferrer" class="qr-button">${config.buttonText}</a>
                       </div>
                     </div>
                     <div class="footer-credit">
-                          Powered by <a href="https://tryworkabroad.com" target="_blank" rel="noreferrer">Workabroad</a>
+                          ${config.poweredBy} <a href="https://tryworkabroad.com" target="_blank" rel="noreferrer">Workabroad</a>
                     </div>
                   </div>
                   <div class="widget-trigger" id="widget-trigger">

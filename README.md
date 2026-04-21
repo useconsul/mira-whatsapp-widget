@@ -4,16 +4,17 @@ A **drop‑in, zero‑dependency widget** that lets your visitors open a WhatsAp
 
 ---
 
-## 1  Quick Start (CDN)
+## 1 Quick Start (CDN)
 
 ```html
 <!-- 1️⃣  Add global config BEFORE the widget script -->
 <script>
   window.MiraWidgetConfig = {
-    whatsappMessage      : "Hi Mira! I'm interested in your services ✨", // optional
-    companyReferralCode  : "ABC123",                                      // optional - adds ref line to message
-    titleText            : "Applying from outside Germany?",              // required
-    subText              : "Chat with Mira.AI",                           // required
+    language: "en", // optional - 'en', 'fr', 'de'
+    whatsappMessage: "Hi Mira! I'm interested in your services ✨", // optional
+    companyReferralCode: "ABC123", // optional - adds ref line to message
+    titleText: "Applying from outside Germany?", // optional (localized by default)
+    subText: "Chat with Mira.AI", // optional (localized by default)
     // containerId       : "custom‑placeholder"                          // optional (see §3)
   };
 </script>
@@ -26,20 +27,21 @@ A **drop‑in, zero‑dependency widget** that lets your visitors open a WhatsAp
 
 ---
 
-## 2  Configuration Reference
+## 2 Configuration Reference
 
-| Property               | Type   | Default          | Description                                                                                                                 |
-| ---------------------- | ------ | ---------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `titleText`            | string | — (**required**) | Title shown on the button.                                                                                                  |
-| `subText`              | string | — (**required**) | Subtitle under the title.                                                                                                   |
-| `whatsappMessage`      | string | `""`             | Prefilled text in the WhatsApp chat.                                                                                        |
-| `companyReferralCode`  | string | *(none)*         | Optional referral code that gets appended to the WhatsApp message to identify the referring company.                        |
-| `position`             | string | `"bottom-right"` | One of `bottom-right`, `bottom-left`, `top-right`, `top-left` (only used in **floating** mode).                             |
-| `containerId`          | string | *(none)*         | **Embed** mode: ID of the element where the widget should be rendered. If omitted the widget floats and follows `position`. |
+| Property              | Type   | Default          | Description                                                                                                                 |
+| --------------------- | ------ | ---------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `language`            | string | `"en"`           | Language for the widget. Supported: `en`, `fr`, `de`.                                                                       |
+| `titleText`           | string | _(localized)_    | Title shown on the button. Automatically translated if not provided.                                                        |
+| `subText`             | string | _(localized)_    | Subtitle under the title. Automatically translated if not provided.                                                         |
+| `whatsappMessage`     | string | _(localized)_    | Prefilled text in the WhatsApp chat.                                                                                        |
+| `companyReferralCode` | string | _(none)_         | Optional referral code that gets appended to the WhatsApp message to identify the referring company.                        |
+| `position`            | string | `"bottom-right"` | One of `bottom-right`, `bottom-left`, `top-right`, `top-left` (only used in **floating** mode).                             |
+| `containerId`         | string | _(none)_         | **Embed** mode: ID of the element where the widget should be rendered. If omitted the widget floats and follows `position`. |
 
 ---
 
-## 3  Company Referral Codes
+## 3 Company Referral Codes
 
 The `companyReferralCode` parameter allows Mira to track which website visitors( Candidates ) came from their widget. When provided, it automatically appends a referral line to the WhatsApp message.
 
@@ -51,12 +53,13 @@ The `companyReferralCode` parameter allows Mira to track which website visitors(
     whatsappMessage: "Hi Mira! I'm interested in your services",
     companyReferralCode: "PARTNER123",
     titleText: "Need Help?",
-    subText: "Chat with Mira.AI"
+    subText: "Chat with Mira.AI",
   };
 </script>
 ```
 
 **Resulting WhatsApp Message:**
+
 ```
 Hi Mira! I'm interested in your services
 Ref: PARTNER123
@@ -66,7 +69,7 @@ Ref: PARTNER123
 
 ---
 
-## 4  Embed vs Floating Mode
+## 4 Embed vs Floating Mode
 
 ### Floating (default)
 
@@ -80,9 +83,9 @@ No `containerId` ⇒ the widget is `position:fixed` to the viewport.
   window.MiraWidgetConfig = {
     whatsappMessage: "Hi Mira! I'm interested in your services ✨",
     companyReferralCode: "PROMO2024", // optional referral tracking
-    titleText : "Applying from outside Germany?",       // required
-    subText : "Chat with Mira.AI",  
-    containerId: "promo‑spot" // 🔗 render RIGHT HERE
+    titleText: "Applying from outside Germany?", // required
+    subText: "Chat with Mira.AI",
+    containerId: "promo‑spot", // 🔗 render RIGHT HERE
   };
 </script>
 <script src="https://cdn.jsdelivr.net/gh/useconsul/mira-whatsapp-widget@latest/dist/mira-widget.min.js"></script>
@@ -92,7 +95,7 @@ No `containerId` ⇒ the widget is `position:fixed` to the viewport.
 
 ---
 
-## 5  CMS Recipes
+## 5 CMS Recipes
 
 ### WordPress (theme or plugin)
 
@@ -132,7 +135,7 @@ Just paste the same two `<script>` tags into your **Custom Code / Footer HTML** 
 
 ---
 
-## 6  Frontend Frameworks
+## 6 Frontend Frameworks
 
 > The widget is plain IIFE JavaScript: no React, Vue or Angular bindings needed. Load it **once** per page, preferably in the HTML template so every route has access.
 
@@ -144,8 +147,8 @@ Just paste the same two `<script>` tags into your **Custom Code / Footer HTML** 
   <div id="root"></div>
   <script>
     window.MiraWidgetConfig = {
-      titleText : "Need help?",
-      subText   : "Chat with Mira.AI",
+      titleText: "Need help?",
+      subText: "Chat with Mira.AI",
     };
   </script>
   <script src="https://cdn.jsdelivr.net/gh/useconsul/mira-whatsapp-widget@latest/dist/mira-widget.min.js"></script>
@@ -194,30 +197,66 @@ The widget is global—no need to import anything in your TS code.
 
 ---
 
-## 7  Advanced API (runtime control)
+## 8 Internationalization
+
+The widget supports automatic translation for **English (en)**, **French (fr)**, and **German (de)**.
+
+### Setting the Language
+
+To change the language, set the `language` parameter in your configuration:
+
+```javascript
+window.MiraWidgetConfig = {
+  language: "de", // Switch to German
+};
+```
+
+### Translation Components
+
+When a language is selected, the following elements are automatically localized:
+
+- Button title and subtitle
+- WhatsApp prefilled message
+- "How it works" steps in the dropdown
+- Status indicators and footer text
+
+### Overriding Translations
+
+You can still override any specific text field while using a localized version. The widget uses your provided strings as first priority, then falls back to the translation object, and finally to the English defaults.
+
+```javascript
+window.MiraWidgetConfig = {
+  language: "fr",
+  titleText: "Besoin d'aide ?", // Custom override for French title
+};
+```
+
+---
+
+## 9 Advanced API (runtime control)
 
 Once loaded, a global object becomes available:
 
 ```js
-window.MiraCustomWidget.open();   // programmatically open
-window.MiraCustomWidget.close();  // close
+window.MiraCustomWidget.open(); // programmatically open
+window.MiraCustomWidget.close(); // close
 window.MiraCustomWidget.toggle(); // toggle state
 window.MiraCustomWidget.remove(); // completely remove from the DOM
 ```
 
 ---
 
-## 8  Troubleshooting
+## 10 Troubleshooting
 
-| Symptom             | Cause / Fix                                                                                       |
-| ------------------- | ------------------------------------------------------------------------------------------------- |
-| Widget doesn't show | Make sure **both** `<script>` tags are present *and* `titleText`/`subText` are provided.          |
-| Wrong container ID  | The widget logs `Container with id "…" not found` in the console and falls back to floating mode. |
-| Multiple widgets    | The script guards against duplicates: only the **first** instance on the page will render.        |
+| Symptom             | Cause / Fix                                                                                               |
+| ------------------- | --------------------------------------------------------------------------------------------------------- |
+| Widget doesn't show | Make sure **both** `<script>` tags are present.                                                           |
+| Unsupported Lang    | If an unsupported language is provided, the widget defaults to English and logs a warning in the console. |
+| Wrong container ID  | The widget logs `Container with id "…" not found` in the console and falls back to floating mode.         |
+| Multiple widgets    | The script guards against duplicates: only the **first** instance on the page will render.                |
 
 ---
 
-## 8  License
+## 11 License
 
 [MIT](LICENSE)
-
