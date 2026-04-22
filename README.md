@@ -10,12 +10,12 @@ A **drop‑in, zero‑dependency widget** that lets your visitors open a WhatsAp
 <!-- 1️⃣  Add global config BEFORE the widget script -->
 <script>
   window.MiraWidgetConfig = {
+    agentName: "Mira.Ai", // optional - defaults to Mira.Ai
     language: "en", // optional - 'en', 'fr', 'de'
-    whatsappMessage: "Hi Mira! I'm interested in your services ✨", // optional
+    whatsappMessage: "Hi Mira! I'm interested in your services", // optional - defaults to localized greeting
     companyReferralCode: "ABC123", // optional - adds ref line to message
-    titleText: "Applying from outside Germany?", // optional (localized by default)
-    subText: "Chat with Mira.AI", // optional (localized by default)
-    // containerId       : "custom‑placeholder"                          // optional (see §3)
+    // agentPhone: "12272132926",  // optional - override default phone
+    // agentImage: "https://...",   // optional - override default image
   };
 </script>
 
@@ -29,15 +29,18 @@ A **drop‑in, zero‑dependency widget** that lets your visitors open a WhatsAp
 
 ## 2 Configuration Reference
 
-| Property              | Type   | Default          | Description                                                                                                                 |
-| --------------------- | ------ | ---------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `language`            | string | `"en"`           | Language for the widget. Supported: `en`, `fr`, `de`.                                                                       |
-| `titleText`           | string | _(localized)_    | Title shown on the button. Automatically translated if not provided.                                                        |
-| `subText`             | string | _(localized)_    | Subtitle under the title. Automatically translated if not provided.                                                         |
-| `whatsappMessage`     | string | _(localized)_    | Prefilled text in the WhatsApp chat.                                                                                        |
-| `companyReferralCode` | string | _(none)_         | Optional referral code that gets appended to the WhatsApp message to identify the referring company.                        |
-| `position`            | string | `"bottom-right"` | One of `bottom-right`, `bottom-left`, `top-right`, `top-left` (only used in **floating** mode).                             |
-| `containerId`         | string | _(none)_         | **Embed** mode: ID of the element where the widget should be rendered. If omitted the widget floats and follows `position`. |
+| Property              | Type   | Default          | Description                                                                                                                        |
+| --------------------- | ------ | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `agentName`           | string | `"Mira.Ai"`      | The name of your AI Assistant. Used in headers and replaced in `{{agent}}` template keys.                                          |
+| `agentPhone`          | string | _(Mira Phone)_   | The WhatsApp phone number (numeric only, including country code). Do not include `+` or special characters. e.g. `"447481738301"`. |
+| `agentImage`          | string | _(Mira Image)_   | URL to the profile picture shown in the widget.                                                                                    |
+| `language`            | string | `"en"`           | Language for the widget. Supported: `en`, `fr`, `de`.                                                                              |
+| `whatsappMessage`     | string | _(localized)_    | Prefilled text in the WhatsApp chat. Can use `{{agent}}` placeholder to fill with agent name.                                      |
+| `companyReferralCode` | string | _(none)_         | Optional referral code that gets appended to the WhatsApp message to identify the source.                                          |
+| `position`            | string | `"bottom-right"` | One of `bottom-right`, `bottom-left`, `top-right`, `top-left` (only used in **floating** mode).                                    |
+| `containerId`         | string | _(none)_         | **Embed** mode: ID of the element where the widget should be rendered. If omitted the widget floats.                               |
+| `titleText`           | string | _(deprecated)_   | **[DEPRECATED]** Use `agentName` for automated localized titles.                                                                   |
+| `subText`             | string | _(deprecated)_   | **[DEPRECATED]** Use `agentName` for automated localized subtitles.                                                                |
 
 ---
 
@@ -50,10 +53,9 @@ The `companyReferralCode` parameter allows Mira to track which website visitors(
 ```html
 <script>
   window.MiraWidgetConfig = {
-    whatsappMessage: "Hi Mira! I'm interested in your services",
+    agentName: "Recruitment Bot",
     companyReferralCode: "PARTNER123",
-    titleText: "Need Help?",
-    subText: "Chat with Mira.AI",
+    whatsappMessage: "Hi {{agent}}! I'm interested in your services",
   };
 </script>
 ```
@@ -81,11 +83,9 @@ No `containerId` ⇒ the widget is `position:fixed` to the viewport.
 <div id="promo‑spot" style="height: 400px; width: 300px;"></div>
 <script>
   window.MiraWidgetConfig = {
-    whatsappMessage: "Hi Mira! I'm interested in your services ✨",
-    companyReferralCode: "PROMO2024", // optional referral tracking
-    titleText: "Applying from outside Germany?", // required
-    subText: "Chat with Mira.AI",
-    containerId: "promo‑spot", // 🔗 render RIGHT HERE
+    agentName: "Mira.Ai",
+    companyReferralCode: "PROMO2024",
+    containerId: "promo-spot", // 🔗 render RIGHT HERE
   };
 </script>
 <script src="https://cdn.jsdelivr.net/gh/useconsul/mira-whatsapp-widget@latest/dist/mira-widget.min.js"></script>
@@ -103,10 +103,9 @@ No `containerId` ⇒ the widget is `position:fixed` to the viewport.
 <!-- footer.php -->
 <script>
   window.MiraWidgetConfig = {
-    titleText : "Need advice?",
-    subText   : "Talk to Mira.AI",
-    whatsappMessage: "Hi, I found you via our website!",
-    companyReferralCode: "WP001", // Track WordPress referrals
+    agentName: "Support Bot",
+    companyReferralCode: "WP001",
+    language: "en"
   };
 </script>
 <script src="https://cdn.jsdelivr.net/gh/useconsul/mira-whatsapp-widget@latest/dist/mira-widget.min.js"></script>
@@ -119,10 +118,9 @@ No `containerId` ⇒ the widget is `position:fixed` to the viewport.
 {% raw %}
 <script>
   window.MiraWidgetConfig = {
-    titleText : "Questions?",
-    subText   : "Chat with us on WhatsApp",
-    whatsappMessage: "Hi Mira!",
-    companyReferralCode: "SHOP001", // Track Shopify store referrals
+    agentName: "Store Assistant",
+    companyReferralCode: "SHOP001",
+    language: "de"
   };
 </script>
 {% endraw %}
@@ -147,8 +145,10 @@ Just paste the same two `<script>` tags into your **Custom Code / Footer HTML** 
   <div id="root"></div>
   <script>
     window.MiraWidgetConfig = {
+      agentName: "Mira Helper",
+      language: "en",
       titleText: "Need help?",
-      subText: "Chat with Mira.AI",
+      subText: "Chat with {{agent}}",
     };
   </script>
   <script src="https://cdn.jsdelivr.net/gh/useconsul/mira-whatsapp-widget@latest/dist/mira-widget.min.js"></script>
@@ -169,9 +169,10 @@ export default function RootLayout({ children }) {
         <Script id="mira-widget-config" strategy="beforeInteractive">
           {`
             window.MiraWidgetConfig = {
+              agentName: "Mira Assistant",
+              whatsappMessage: "Hi {{agent}}! I'm interested in your services ✨",
               titleText: "Need help?",
-              subText: "Chat with Mira.AI",
-              whatsappMessage: "Hi! I'm interested in your services ✨"
+              subText: "Chat with {{agent}}",
             };
           `}
         </Script>
@@ -222,12 +223,14 @@ When a language is selected, the following elements are automatically localized:
 
 ### Overriding Translations
 
-You can still override any specific text field while using a localized version. The widget uses your provided strings as first priority, then falls back to the translation object, and finally to the English defaults.
+You can still override any specific text field while using a localized version. The widget uses your provided strings as first priority, then falls back to the translation object, and finally to the English defaults. However, with the new `agentName` system, most text is automatically formatted (e.g., "Apply with {{agent}}").
 
 ```javascript
 window.MiraWidgetConfig = {
   language: "fr",
-  titleText: "Besoin d'aide ?", // Custom override for French title
+  agentName: "Mira Assistant", // Automatically produces "Postulez avec Mira Assistant"
+  titleText: "Besoin d'aide ?", // Custom override for French title,
+  subText: "Discuter avec {{agent}}", // Custom override for French subtitle with agentName inclusion
 };
 ```
 

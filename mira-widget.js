@@ -4,17 +4,12 @@
   if (document.getElementById("mira-custom-widget")) {
     return;
   }
-  // Internal constants
-  const MIRA_PHONE = "12272132926";
-  const MIRA_PROFILE =
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mira.Ai%20by%20Workabroad.JPEG-09DTsUV87ZcHUFF4Vg0fQobzN4OJoQ.jpeg";
-
   // Translation object
   const translations = {
     en: {
-      whatsappMessage: "Hello Mira",
+      whatsappMessage: "Hello {{agent}}",
       titleText: "Applying from outside Germany?",
-      subText: "Apply with Mira.Ai",
+      subText: "Apply with {{agent}}",
       headerSubtitle: "WhatsApp Recruiting Bot",
       statusText: "Connected",
       stepsHeading: "How it works:",
@@ -26,9 +21,9 @@
       poweredBy: "Powered by",
     },
     fr: {
-      whatsappMessage: "Bonjour Mira",
+      whatsappMessage: "Bonjour {{agent}}",
       titleText: "Vous postulez depuis l'étranger ?",
-      subText: "Postulez avec Mira.Ai",
+      subText: "Postulez avec {{agent}}",
       headerSubtitle: "Bot de recrutement WhatsApp",
       statusText: "Connecté",
       stepsHeading: "Comment ça marche :",
@@ -40,9 +35,9 @@
       poweredBy: "Propulsé par",
     },
     de: {
-      whatsappMessage: "Hallo Mira",
+      whatsappMessage: "Hallo {{agent}}",
       titleText: "Bewerbung aus dem Ausland?",
-      subText: "Bewerben Sie sich mit Mira.Ai",
+      subText: "Bewerben Sie sich mit {{agent}}",
       headerSubtitle: "WhatsApp Recruiting Bot",
       statusText: "Verbunden",
       stepsHeading: "So funktioniert es:",
@@ -58,9 +53,10 @@
   // Default configuration
   const defaultConfig = {
     language: "en",
-    whatsappMessage: "Hello Mira",
+    agentPhone: "12272132926",
+    agentImage: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mira.Ai%20by%20Workabroad.JPEG-09DTsUV87ZcHUFF4Vg0fQobzN4OJoQ.jpeg",
+    agentName: "Mira.Ai",
     titleText: "Applying from outside Germany?",
-    subText: "Apply with Mira.Ai",
     position: "bottom-right",
   };
 
@@ -110,6 +106,13 @@
   textFields.forEach((field) => {
     if (userConfig[field] === undefined) {
       config[field] = t[field];
+    }
+  });
+
+  // Replace {{agent}} placeholder in all text configurations
+  textFields.forEach((field) => {
+    if (typeof config[field] === "string") {
+      config[field] = config[field].replace(/{{agent}}/g, config.agentName);
     }
   });
 
@@ -299,6 +302,12 @@
                 flex: 1;
             }
 
+            .mira-custom-widget .header-title-row {
+              display: flex;
+              align-items: flex-start;
+              gap: 4px;
+            }
+
             .mira-custom-widget .header-title {
                 font-size: 18px;
                 font-weight: 700;
@@ -321,9 +330,6 @@
                 background: #ECFDF3;
                 padding: 6px 10px;
                 border-radius: 100px;
-                position: absolute;
-                right: 20px;
-                top: 20px;
             }
 
             .mira-custom-widget .status-dot {
@@ -530,7 +536,7 @@
       finalMessage += `\nRef: ${config.companyReferralCode}`;
     }
     
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=${MIRA_PHONE}${
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${config.agentPhone}${
       finalMessage
         ? `&text=${encodeURIComponent(finalMessage)}`
         : ""
@@ -541,14 +547,16 @@
                   <div class="qr-dropdown">
                     <div class="qr-content">
                       <div class="qr-header">
-                        <img class="profile-image" src="${MIRA_PROFILE}" alt="Mira.Ai" style="width: 48px; height: 48px; margin: 0;">
+                          <img class="profile-image" src="${config.agentImage}" alt="${config.agentName}" style="width: 48px; height: 48px; margin: 0;">
                          <div class="header-main-info">
-                          <h3 class="header-title">Mira.Ai</h3>
+                          <div class="header-title-row">
+                            <h3 class="header-title">${config.agentName}</h3> 
+                            <div class="status-badge">
+                              <span class="status-dot"></span>
+                              <span class="status-text">${config.statusText}</span>
+                            </div>
+                          </div>
                           <p class="header-subtitle">${config.headerSubtitle}</p>
-                        </div>
-                        <div class="status-badge">
-                          <span class="status-dot"></span>
-                          <span class="status-text">${config.statusText}</span>
                         </div>
                       </div>
 
@@ -587,7 +595,7 @@
                   </div>
                   <div class="widget-trigger" id="widget-trigger">
                     <div class="trigger-content">                
-                      <img class="profile-image" src="${MIRA_PROFILE}" alt="Mira.Ai">
+                      <img class="profile-image" src="${config.agentImage}" alt="${config.agentName}">
                       <div class="text-content">
                         <div class="title-text">${config.titleText}</div>
                         <div class="sub-text">${config.subText}</div>
