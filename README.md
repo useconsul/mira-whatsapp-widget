@@ -63,7 +63,7 @@ The `companyReferralCode` parameter allows Mira to track which website visitors(
 **Resulting WhatsApp Message:**
 
 ```
-Hi Mira! I'm interested in your services
+Hi Recruitment Bot! I'm interested in your services
 Ref: PARTNER123
 ```
 
@@ -91,7 +91,7 @@ No `containerId` ⇒ the widget is `position:fixed` to the viewport.
 <script src="https://cdn.jsdelivr.net/gh/useconsul/mira-whatsapp-widget@latest/dist/mira-widget.min.js"></script>
 ```
 
-> **Note:** Embedded widgets have a default width of **250px** and will take the full height of their container.
+> **Note:** Embedded widgets have a default width of **300px** and will take the full height of their container.
 
 ---
 
