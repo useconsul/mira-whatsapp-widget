@@ -54,7 +54,8 @@
   const defaultConfig = {
     language: "en",
     agentPhone: "12272132926",
-    agentImage: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mira.Ai%20by%20Workabroad.JPEG-09DTsUV87ZcHUFF4Vg0fQobzN4OJoQ.jpeg",
+    agentImage:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mira.Ai%20by%20Workabroad.JPEG-09DTsUV87ZcHUFF4Vg0fQobzN4OJoQ.jpeg",
     agentName: "Mira.Ai",
     titleText: "Applying from outside Germany?",
     position: "bottom-right",
@@ -120,7 +121,10 @@
   const validationErrors = validateConfig(config);
   if (validationErrors.length > 0) {
     // If validation fails, we still have our defaults and translations
-    console.warn("Mira Widget: Configuration validation errors:", validationErrors);
+    console.warn(
+      "Mira Widget: Configuration validation errors:",
+      validationErrors,
+    );
   }
 
   let isOpen = false;
@@ -135,7 +139,7 @@
       const container = document.getElementById(config.containerId);
       if (!container) {
         console.error(
-          `Mira Widget: Container with id "${config.containerId}" not found`
+          `Mira Widget: Container with id "${config.containerId}" not found`,
         );
         return;
       }
@@ -306,6 +310,7 @@
               display: flex;
               align-items: flex-start;
               gap: 4px;
+              justify-content: space-between;
             }
 
             .mira-custom-widget .header-title {
@@ -328,7 +333,7 @@
                 align-items: center;
                 gap: 6px;
                 background: #ECFDF3;
-                padding: 6px 10px;
+                padding: 3px 10px;
                 border-radius: 100px;
             }
 
@@ -527,23 +532,21 @@
     // Inject styles
     const styleSheet = document.createElement("style");
     styleSheet.textContent = styles;
-    document.head.appendChild(styleSheet);    
+    document.head.appendChild(styleSheet);
     // Create WhatsApp URL with message
     let finalMessage = config.whatsappMessage || "";
-    
+
     // Add referral code to message if provided
     if (config.companyReferralCode) {
       finalMessage += `\nRef: ${config.companyReferralCode}`;
     }
-    
+
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${config.agentPhone}${
-      finalMessage
-        ? `&text=${encodeURIComponent(finalMessage)}`
-        : ""
+      finalMessage ? `&text=${encodeURIComponent(finalMessage)}` : ""
     }`;
     // Create widget HTML
     const widgetHTML = `
-                <div class="mira-custom-widget ${isEmbeddedMode ? 'embedded-mode' : 'floating-mode'}" id="mira-custom-widget">
+                <div class="mira-custom-widget ${isEmbeddedMode ? "embedded-mode" : "floating-mode"}" id="mira-custom-widget">
                   <div class="qr-dropdown">
                     <div class="qr-content">
                       <div class="qr-header">
@@ -583,7 +586,7 @@
                       <div class="qr-section">
                         <div class="qr-wrapper">
                           <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
-                            whatsappUrl
+                            whatsappUrl,
                           )}&color=102542&bgcolor=ffffff" alt="WhatsApp QR Code">
                         </div>
                         <a href="${whatsappUrl}" target="_blank" rel="noreferrer" class="qr-button">${config.buttonText}</a>
@@ -618,41 +621,42 @@
     const trigger = document.getElementById("widget-trigger");
 
     // Only apply positioning for floating mode
-  if (!isEmbeddedMode) {
-    const positionStyles = {
-      "bottom-right": { bottom: "20px", right: "20px" },
-      "bottom-left": { bottom: "20px", left: "20px" },
-      "top-right": { top: "20px", right: "20px" },
-      "top-left": { top: "20px", left: "20px" },
-    };
+    if (!isEmbeddedMode) {
+      const positionStyles = {
+        "bottom-right": { bottom: "20px", right: "20px" },
+        "bottom-left": { bottom: "20px", left: "20px" },
+        "top-right": { top: "20px", right: "20px" },
+        "top-left": { top: "20px", left: "20px" },
+      };
 
-    const selectedPosition = positionStyles[config.position] || positionStyles["bottom-right"];
-    Object.assign(widget.style, selectedPosition);
+      const selectedPosition =
+        positionStyles[config.position] || positionStyles["bottom-right"];
+      Object.assign(widget.style, selectedPosition);
 
-    // Adjust dropdown for top positions
-    if (config.position.startsWith("top")) {
-      const dropdown = widget.querySelector(".qr-dropdown");
-      dropdown.style.transformOrigin = "top center";
-      dropdown.style.marginTop = "10px";
-      dropdown.style.marginBottom = "0";
-      dropdown.style.transform = "translateY(-10px) scale(0.95)";
-      widget.classList.add("top-position");
-    } else {
-      widget.classList.add("bottom-position");
+      // Adjust dropdown for top positions
+      if (config.position.startsWith("top")) {
+        const dropdown = widget.querySelector(".qr-dropdown");
+        dropdown.style.transformOrigin = "top center";
+        dropdown.style.marginTop = "10px";
+        dropdown.style.marginBottom = "0";
+        dropdown.style.transform = "translateY(-10px) scale(0.95)";
+        widget.classList.add("top-position");
+      } else {
+        widget.classList.add("bottom-position");
+      }
+
+      // Entrance animation for floating mode only
+      setTimeout(() => {
+        widget.style.opacity = "0";
+        widget.style.transform = "translateY(100px)";
+        widget.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+
+        requestAnimationFrame(() => {
+          widget.style.opacity = "1";
+          widget.style.transform = "translateY(0)";
+        });
+      }, 100);
     }
-
-    // Entrance animation for floating mode only
-    setTimeout(() => {
-      widget.style.opacity = "0";
-      widget.style.transform = "translateY(100px)";
-      widget.style.transition = "opacity 0.5s ease, transform 0.5s ease";
-
-      requestAnimationFrame(() => {
-        widget.style.opacity = "1";
-        widget.style.transform = "translateY(0)";
-      });
-    }, 100);
-  }
 
     // Toggle functionality
     function toggleWidget() {
