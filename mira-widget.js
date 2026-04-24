@@ -108,7 +108,6 @@
       try {
         const response = await fetch(`${API_URL}/${config.accessKey}`);
         const result = await response.json();
-        console.log(result);
         config.agentPhone = result.agentPhone.replace("+", "");
         config.agentImage = result.agentImage;
         config.agentName = result.agentName;
