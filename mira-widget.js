@@ -10,42 +10,21 @@
       whatsappMessage: "Hello {{agent}}",
       titleText: "Applying from outside Germany?",
       subText: "Apply with {{agent}}",
-      headerSubtitle: "WhatsApp Recruiting Bot",
-      statusText: "Connected",
-      stepsHeading: "How it works:",
-      step1: "Scan the QR code below",
-      step2: "Start a chat on WhatsApp",
-      step3: "Answer a few quick questions",
-      step4: "Get applied instantly",
-      buttonText: "Start Chat on WhatsApp",
+      buttonText: "Continue on WhatsApp",
       poweredBy: "Powered by",
     },
     fr: {
       whatsappMessage: "Bonjour {{agent}}",
       titleText: "Vous postulez depuis l'étranger ?",
       subText: "Postulez avec {{agent}}",
-      headerSubtitle: "Bot de recrutement WhatsApp",
-      statusText: "Connecté",
-      stepsHeading: "Comment ça marche :",
-      step1: "Scannez le code QR ci-dessous",
-      step2: "Lancez une discussion sur WhatsApp",
-      step3: "Répondez à quelques questions rapides",
-      step4: "Postulez instantanément",
-      buttonText: "Démarrer la discussion sur WhatsApp",
+      buttonText: "Continuer sur WhatsApp",
       poweredBy: "Propulsé par",
     },
     de: {
       whatsappMessage: "Hallo {{agent}}",
       titleText: "Bewerbung aus dem Ausland?",
       subText: "Bewerben Sie sich mit {{agent}}",
-      headerSubtitle: "WhatsApp Recruiting Bot",
-      statusText: "Verbunden",
-      stepsHeading: "So funktioniert es:",
-      step1: "Scannen Sie den QR-Code unten",
-      step2: "Starten Sie einen Chat auf WhatsApp",
-      step3: "Beantworten Sie ein paar kurze Fragen",
-      step4: "Sofort bewerben",
-      buttonText: "Chat auf WhatsApp starten",
+      buttonText: "Fortfahren auf WhatsApp",
       poweredBy: "Unterstützt durch",
     },
   };
@@ -152,7 +131,7 @@
               position: relative;
               width: 100%;
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-              --width: 300px;
+              --width: 270px;
             }
 
             .mira-custom-widget.embedded-mode {
@@ -286,160 +265,34 @@
                 fill: white;
             }
 
-            /* QR Content Modernization */
+            /* QR Content Simplification */
             .mira-custom-widget .qr-content {
-                padding: 0;
+                padding: 20px;
                 text-align: center;
                 background: white;
             }
 
-            .mira-custom-widget .qr-header {
-                display: flex;
-                align-items: center;
-                padding: 16px 20px;
-                gap: 12px;
-                text-align: left;
-                position: relative;
-            }
-
-            .mira-custom-widget .header-main-info {
-                flex: 1;
-            }
-
-            .mira-custom-widget .header-title-row {
-              display: flex;
-              align-items: flex-start;
-              gap: 4px;
-              justify-content: space-between;
-            }
-
-            .mira-custom-widget .header-title {
-                font-size: 18px;
-                font-weight: 700;
-                color: #102542;
-                margin: 0;
-                line-height: 1.2;
-            }
-
-            .mira-custom-widget .header-subtitle {
-                font-size: 13px;
-                color: #667085;
-                margin: 2px 0 0;
-                line-height: 1.4;
-            }
-
-            .mira-custom-widget .status-badge {
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                background: #ECFDF3;
-                padding: 3px 10px;
-                border-radius: 100px;
-            }
-
-            .mira-custom-widget .status-dot {
-                width: 6px;
-                height: 6px;
-                background: #12B76A;
-                border-radius: 50%;
-            }
-
-            .mira-custom-widget .status-text {
-                font-size: 12px;
-                font-weight: 600;
-                color: #027A48;
-            }
-
-            /* Steps Section */
-            .mira-custom-widget .steps-container {
-                background: #F9FAFB;
-                margin: 0 20px 12px;
-                padding: 14px 16px;
-                border-radius: 16px;
-                text-align: left;
-            }
-
-            .mira-custom-widget .steps-heading {
-                font-size: 13px;
-                font-weight: 600;
-                color: #102542;
-                margin-bottom: 12px;
-            }
-
-            .mira-custom-widget .step-item {
-                display: flex;
-                gap: 12px;
-                position: relative;
-                margin-bottom: 12px;
-            }
-
-            .mira-custom-widget .step-item:last-child {
-                margin-bottom: 0;
-            }
-
-            .mira-custom-widget .step-item:not(:last-child)::after {
-                content: '';
-                position: absolute;
-                left: 12px;
-                top: 24px;
-                width: 1px;
-                height: calc(100% - 8px);
-                background: #E4E7EC;
-            }
-
-            .mira-custom-widget .step-number {
-                width: 24px;
-                height: 24px;
-                background: #D1FAE5;
-                color: #059669;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 12px;
-                font-weight: 700;
-                flex-shrink: 0;
-                z-index: 1;
-            }
-
-            .mira-custom-widget .step-item:last-child .step-number {
-                background: #F2F4F7;
-                color: #475467;
-            }
-
-            .mira-custom-widget .step-text {
-                font-size: 14px;
-                color: #344054;
-                line-height: 1.4;
-            }
-
             /* QR View */
             .mira-custom-widget .qr-section {
-                padding: 0 20px 20px;
+                padding: 0;
             }
 
             .mira-custom-widget .qr-wrapper {
                 background: #F9FAFB;
-                padding: 12px;
+                padding: 16px;
                 border-radius: 16px;
-                margin-bottom: 12px;
+                margin-bottom: 20px;
+                border: 1px solid #EAECF0;
             }
             
             .mira-custom-widget .qr-code {
-                width: 120px;
-                height: 120px;
+                width: 100%;
+                max-width: 220px;
+                aspect-ratio: 1 / 1;
                 margin: 0 auto;
                 display: block;
-                border: 1px solid #EAECF0;
-                border-radius: 12px;
+                border-radius: 8px;
                 background: white;
-                padding: 6px;
-            }
-
-            .mira-custom-widget .qr-caption {
-                font-size: 13px;
-                color: #667085;
-                margin-bottom: 16px;
             }
 
             .mira-custom-widget .qr-button {
@@ -450,9 +303,10 @@
                 background-color: #25D366;
                 color: white;
                 text-decoration: none;
-                font-size: 15px;
+                font-size: 14px;
                 font-weight: 600;
-                padding: 14px 24px;
+                padding: 14px 20px;
+                white-space: nowrap;
                 border-radius: 12px;
                 transition: all 0.3s ease;
                 box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
@@ -549,43 +403,9 @@
                 <div class="mira-custom-widget ${isEmbeddedMode ? "embedded-mode" : "floating-mode"}" id="mira-custom-widget">
                   <div class="qr-dropdown">
                     <div class="qr-content">
-                      <div class="qr-header">
-                          <img class="profile-image" src="${config.agentImage}" alt="${config.agentName}" style="width: 48px; height: 48px; margin: 0;">
-                         <div class="header-main-info">
-                          <div class="header-title-row">
-                            <h3 class="header-title">${config.agentName}</h3> 
-                            <div class="status-badge">
-                              <span class="status-dot"></span>
-                              <span class="status-text">${config.statusText}</span>
-                            </div>
-                          </div>
-                          <p class="header-subtitle">${config.headerSubtitle}</p>
-                        </div>
-                      </div>
-
-                      <div class="steps-container">
-                        <div class="steps-heading">${config.stepsHeading}</div>
-                        <div class="step-item">
-                          <div class="step-number">1</div>
-                          <div class="step-text">${config.step1}</div>
-                        </div>
-                        <div class="step-item">
-                          <div class="step-number">2</div>
-                          <div class="step-text">${config.step2}</div>
-                        </div>
-                        <div class="step-item">
-                          <div class="step-number">3</div>
-                          <div class="step-text">${config.step3}</div>
-                        </div>
-                        <div class="step-item">
-                          <div class="step-number">4</div>
-                          <div class="step-text">${config.step4}</div>
-                        </div>
-                      </div>
-
                       <div class="qr-section">
                         <div class="qr-wrapper">
-                          <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
+                          <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(
                             whatsappUrl,
                           )}&color=102542&bgcolor=ffffff" alt="WhatsApp QR Code">
                         </div>
