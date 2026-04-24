@@ -1,6 +1,7 @@
 // Mira.Ai Custom Widget - Standalone IIFE
 
 (() => {
+  const API_URL = "__API_URL__";
   if (document.getElementById("mira-custom-widget")) {
     return;
   }
@@ -32,10 +33,6 @@
   // Default configuration
   const defaultConfig = {
     language: "en",
-    agentPhone: "12272132926",
-    agentImage:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mira.Ai%20by%20Workabroad.JPEG-09DTsUV87ZcHUFF4Vg0fQobzN4OJoQ.jpeg",
-    agentName: "Mira.Ai",
     titleText: "Applying from outside Germany?",
     position: "bottom-right",
   };
@@ -47,6 +44,12 @@
     // Validate required fields (DEPRECATED)
     // if (!config.titleText) errors.push("Title text is required");
     // if (!config.subText) errors.push("Sub text is required");
+
+    if (!config.accessKey) {
+      errors.push(
+        "No accessKey provided. Please obtain one from your company settings",
+      );
+    }
 
     // Validate language
     if (config.language && !["en", "fr", "de"].includes(config.language)) {
@@ -67,34 +70,25 @@
   const lang = translations[config.language] ? config.language : "en";
   const t = translations[lang];
 
-  // Fill in missing text fields from translations if not provided by user
-  const textFields = [
-    "whatsappMessage",
-    "titleText",
-    "subText",
-    "headerSubtitle",
-    "statusText",
-    "stepsHeading",
-    "step1",
-    "step2",
-    "step3",
-    "step4",
-    "buttonText",
-    "poweredBy",
-  ];
+  // Function to process translations with agent name
+  function processTranslations(config, t) {
+    const textFields = [
+      "whatsappMessage",
+      "titleText",
+      "subText",
+      "buttonText",
+      "poweredBy",
+    ];
 
-  textFields.forEach((field) => {
-    if (userConfig[field] === undefined) {
-      config[field] = t[field];
-    }
-  });
-
-  // Replace {{agent}} placeholder in all text configurations
-  textFields.forEach((field) => {
-    if (typeof config[field] === "string") {
-      config[field] = config[field].replace(/{{agent}}/g, config.agentName);
-    }
-  });
+    textFields.forEach((field) => {
+      // Use user provided field if exists, otherwise translation
+      const baseText =
+        userConfig[field] !== undefined ? userConfig[field] : t[field];
+      if (typeof baseText === "string") {
+        config[field] = baseText.replace(/{{agent}}/g, config.agentName || "");
+      }
+    });
+  }
 
   // Validate configuration
   const validationErrors = validateConfig(config);
@@ -108,7 +102,28 @@
 
   let isOpen = false;
 
-  function createWidget() {
+  async function createWidget() {
+    // Fetch agent details if accessKey is provided
+    if (config.accessKey) {
+      try {
+        const response = await fetch(`${API_URL}/${config.accessKey}`);
+        const result = await response.json();
+        console.log(result);
+        config.agentPhone = result.agentPhone.replace("+", "");
+        config.agentImage = result.agentImage;
+        config.agentName = result.agentName;
+      } catch (error) {
+        console.error("Whatsapp Widget: Failed to fetch agent details", error);
+        return;
+      }
+    } else {
+      console.error("Whatsapp Widget: No accessKey provided");
+      return;
+    }
+
+    // Process translations with the final agent name
+    processTranslations(config, t);
+
     // Determine mode based on containerId
     const isEmbeddedMode = !!config.containerId;
     let targetContainer = document.body;

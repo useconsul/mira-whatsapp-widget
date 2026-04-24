@@ -17,6 +17,8 @@ node_modules/
 
 # dotenv environment variable files
 .env
+.env.staging
+.env.production
 .env.development.local
 .env.test.local
 .env.production.local
@@ -30,3 +32,6 @@ node_modules/
 *.njsproj
 *.sln
 *.sw?
+
+# Outputs
+dist/mira-widget.dev.js

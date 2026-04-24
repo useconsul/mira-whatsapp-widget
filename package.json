@@ -4,11 +4,14 @@
   "description": "WhatsApp widget for Mira.AI services",
   "main": "dist/mira-widget.min.js",
   "files": [
-     "dist",
+    "dist",
     "examples"
   ],
   "scripts": {
-    "build": "terser mira-widget.js -o dist/mira-widget.min.js -c -m",
+    "build:dev": "node scripts/build.js .env dist/mira-widget.dev.js",
+    "build:staging": "node scripts/build.js .env.staging dist/mira-widget.staging.js --minify",
+    "build:prod": "node scripts/build.js .env.production dist/mira-widget.min.js --minify",
+    "build": "npm run build:dev && npm run build:staging && npm run build:prod",
     "prepare": "npm run build"
   },
   "keywords": [
